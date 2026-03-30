@@ -5,6 +5,16 @@ from typing import List
 
 app = FastAPI()
 
+from fastapi.middleware.cors import CORSMiddleware
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 # ----------- MODELS -----------
 
 class Consultation(BaseModel):
@@ -83,4 +93,4 @@ def list_consultation():
     rows = cursor.fetchall()
     conn.close()
 
-    return rows
+    return [{"id": r[0], "patientName": r[1], "notes": r[2], "diagnosisCodes": r[3].split(",")} for r in rows]
