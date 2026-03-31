@@ -4,13 +4,14 @@
 const patient_name = ref<string>('')
 const notes = ref<string>('')
 const selectedCodes = ref<string[]>([])
+const config = useRuntimeConfig()
 
 async function submit (){
     if(!patient_name.value || !notes.value || selectedCodes.value.length === 0) {
         alert('Please fill all fields')
         return
     } else {
-        await $fetch('http://localhost:8000/consultation', {
+        await $fetch(`${config.public.apiBase}/consultation`, {
             method: 'POST',
             body: {
             patient_name: patient_name.value,

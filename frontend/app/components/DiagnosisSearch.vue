@@ -6,9 +6,10 @@ const modelValue = defineModel<string[]>({default: () => []})
 const search = ref('')
 const results = ref<Diagnosis[]>([])
 const allDiagnosis = ref<Diagnosis[]>([])
+const config = useRuntimeConfig()
 
 watch(search, async (val) => {
-    const url = new URL('http://localhost:8000/diagnosis')
+    const url = new URL(`${config.public.apiBase}/diagnosis`)
     if (val) {
         url.searchParams.append('search', val)
     }
@@ -28,7 +29,7 @@ function removeCode (code: string) {
 }
 
 onMounted(async () => {
-    const res = await $fetch<Diagnosis[]>('http://localhost:8000/diagnosis')
+    const res = await $fetch<Diagnosis[]>(`${config.public.apiBase}/diagnosis`)
     results.value = res
     allDiagnosis.value = res
 })
