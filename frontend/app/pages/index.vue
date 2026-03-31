@@ -17,7 +17,6 @@ async function getConsultations() {
 
 
 onMounted(async () => {
-    console.info("Config:", config.public.apiBase)
     await getConsultations()
     await getDiagnosisList()
 })
@@ -26,7 +25,6 @@ onMounted(async () => {
 <template>
   <div class="p-6">
     <h1 class="text-2xl font-bold mb-4">Consultations</h1>
-    Config: {{ config.public.apiBase }}
 
     <NuxtLink to="/new" class="bg-blue-500 text-white px-4 py-2 rounded">
       New Consultation
